@@ -1,51 +1,57 @@
-/**
- * give a set of n jobs where each job has a deadline and profit associated with it . ans each job take 1 unit of We have n jobs, where every job is scheduled to be done from startTime[i] to endTime[i], obtaining a profit of profit[i].
+#include <bits/stdc++.h>
+using namespace std;
 
-You're given the startTime, endTime and profit arrays, return the maximum profit you can take such that there are no two jobs in the subset with overlapping time range.
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-If you choose a job that ends at time X you will be able to start another job that starts at time X. 
- * 
- */
+    int t;
+    cin >> t;
 
- #include<bits/stdc++.h>
- using namespace std;
- struct Jobs
- {
-    int id;
-    int deadline;
-    int profit;
- };
- void jobScheduling(vector<Jobs> &v)
- {
-    int cnt=0;
-    int totalProfit=0;
-    auto cmp = [](const Jobs &a, const Jobs &b) { return a.profit < b.profit; };
-    priority_queue<Jobs, vector<Jobs>, decltype(cmp)> pq(cmp);
-    for(int i=0;i<v.size();i++)
+    while (t--)
     {
-        pq.push(v[i]);
-    }
-    vector<int> hash(v.size(),0);
-    while(!pq.empty())
-    {
-        auto it=pq.top();
-        pq.pop();
-        for(int i=it.deadline;i>=0;i--)
+        long long s, m;
+        cin >> s >> m;
+
+        vector<int> positions;
+        int index = 0;
+        long long temp = m;   // FIX: use long long and preserve m
+
+        // Store set bit positions of m
+        while (temp > 0)
         {
-            if(hash[i]==0)
+            if (temp & 1LL)
+                positions.push_back(index);
+
+            temp >>= 1;
+            index++;
+        }
+
+        int i = positions.size() - 1;  // FIX: start from largest bit
+        long long count = 0;
+
+        while (i >= 0 && s > 0)
+        {
+            long long value = (1LL << positions[i]);  // FIX: avoid pow()
+
+            if (value <= s)
             {
-                cnt++;
-                totalProfit+=it.profit;
-                hash[i]=1;
-                break;
+                s -= value;
+                if()
+                count++;
+            }
+            else
+            {
+                i--;
             }
         }
+
+        if (s == 0)
+            cout << count << endl;
+        else
+            cout << -1 << endl;
     }
-    cout<<totalProfit<<endl;
- }
- int main()
- {
-    int n;
-    cin>>n;
-    vector<Jobs> v1(n);
- }
+
+    return 0;
+}
