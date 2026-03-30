@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-bool isPossible(int mid, vector<pair<int, int>> &arr, int n)
+bool isPossible(long long mid, vector<pair<int, int>> &arr, int n)
 {
     for (int i = 0; i < n; i++)
     {
@@ -29,26 +29,22 @@ int main()
     sort(tasks.begin(), tasks.end(),
          [](auto &a, auto &b)
          {
-             return a.second < b.second;
+             return (a.second - a.first) > (b.second - b.first);
          });
-    int start = INT_MAX;
-    int end = 0;
-    int ans = 0;
-for(int i=0;i<n;i++)
-{
-    auto it=tasks[i];
-    cout<<it.first<<" "<<it.second<<" ";
-}
-cout<<endl;
-    for (int i = 0; i < n; i++)
-        start = min(start, tasks[i].second);
+    long long start = 0;
+    long long end = 0;
+    long long ans = 0;
 
     for (int i = 0; i < n; i++)
-        end += tasks[i].second;
+    {
+        start = max(start, (long long)tasks[i].second);
+        end += tasks[i].first;
+    }
+    end += start;
 
     while (start <= end)
     {
-        int mid = start + (end - start) / 2;
+        long long mid = start + (end - start) / 2;
 
         if (isPossible(mid, tasks, n))
         {
